@@ -1,0 +1,28 @@
+# 어렵다.. 이게 1개반이라니 .. 다시 생각 하고 풀어봐댐...
+# 접근 조차 못한듯...  
+def solution(s):
+  answer = len(s) # 문자열 길이
+  # 1개 단위(step)부터 압축 단위를 늘려가며 확인
+  for step in range(1, len(s) // 2 + 1):
+    compressed = ""
+    prev = s[0:step]  # 앞에서부터 step만큼의 문자열 출력
+    count = 1
+    # 단위(step) 크기만큼 증가시키며 이전 문자열과 비교
+    for j in range(step, len(s), step):
+      # 이전 상태와 동일하다면 압축 횟수 증가
+      if prev == s[j:j + step]:
+        count += 1
+      # 다른 문자열이 나왔다면(더 이상 압축하지 못하는 경우)
+      else :
+        compressed += str(count) + prev if count >= 2 else prev
+        prev = s[j:j + step]
+        count = 1
+    print(f'{step}단계 남아있는 문자열 처리 전: {compressed}')
+    # 남아 있는 문자열에 대해 처리
+    compressed += str(count) + prev if count >= 2 else prev
+    print(f'{step}단계 남아있는 문자열 처리 후: {compressed}')
+    # 만들어지는 압축 문자열이 가장 짧은 것
+    answer = min(answer, len(compressed))
+  return answer
+
+print(solution("aaaabbabbabb"))
